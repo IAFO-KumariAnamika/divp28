@@ -3,7 +3,7 @@ class Throw{
         var options={
             bodyA:bodyA,
             pointB:pointB,
-            stiffness:0.01,
+            stiffness:0.007,
             length:10
         }
 
@@ -13,15 +13,22 @@ class Throw{
 
     }
 
-    fly(){
+  fly(){
         this.throw.bodyA=null;
     }
 
-    Launch(){
-        this.throw.bodyA=bodyA;
+    Launch(body){
+        this.throw.bodyA=body;
     }
 
     display(){
+        if(this.throw.body){
+            var pointA=this.throw.bodyA.position;
+            var pointB=this.pointB;
+            strokeWeight(0);
+            line(pointA.x,pointA.y,pointB.x,pointB.y);
+        }
+
 
     }
 }
