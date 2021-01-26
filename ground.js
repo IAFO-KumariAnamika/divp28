@@ -9,7 +9,7 @@ class ground
 		this.y=y;
 		this.w=w
 		this.h=h
-		this.body=Bodies.rectangle(x, y, w, h , options);
+		this.body=Bodies.rectangle(this.x,this.y,this.w,this.h, options);
  		World.add(world, this.body);
 
 	}
