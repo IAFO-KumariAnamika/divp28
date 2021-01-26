@@ -2,15 +2,14 @@
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
-const Body = Matter.Body;
-const Render = Matter.Render;
 const Constraint=Matter.Constraint;
+
 var treeObj, stoneObj,groundObject, launcherObject;
-var mango1,stone;
+var mango1,mango2,mango3,mango4,mango5;
 var world,boy;
 
 function preload(){
-	boy=loadImage("images/boy.png");
+	boy=loadImage("boy.png");
   }
 
 function setup() {
@@ -21,10 +20,17 @@ function setup() {
 
 
 
-	mango1=new mango(1100,100,30);
-   stoneObj=new Stone(100,460,23);
-	treeObj=new tree(1050,580);
 	groundObject=new ground(width/2,600,width,20);
+	treeObj=new tree(1050,580);
+	mango1=new mango(1120,150,30);
+	mango2=new mango(1100,200,30);
+	mango3=new mango(900,210,30);
+	mango4=new mango(900,170,30);
+	mango5=new mango(1250,120,30);
+
+	stoneObj=new Stone(225,400,30);
+	launcherObject=new Throw(stoneObj.body,{x:225,y:400});
+
 
 
 
@@ -42,41 +48,54 @@ function draw() {
   
 
   treeObj.display();
-  mango1.display();
-
   groundObject.display();
+  stoneObj.display();
+  mango1.display();
+  mango2.display();
+  mango3.display();
+  mango4.display();
+  mango5.display();
+
+  detectCollision(stoneObj,mango1);
+  detectCollision(stoneObj,mango2);
+  detectCollision(stoneObj,mango3);
+  detectCollision(stoneObj,mango4);
+  detectCollision(stoneObj,mango5);
+  
+
+
+
+
+  
 }
-	
-
-
 function mouseDragged(){
-
-Matter.Body.setPosition(stone.body,{x:mouseX,y:mouseY});
-
+	Matter.Body.setPosition(stoneObj.body,{x:mouseX,y:mouseY});
 }
 
 function mouseReleased(){
-	stone.fly();
+	launcherObject.fly();
 }
 
-function detectCollision(lstones,lmango){
-   mangoBodyPosition=lmango.body.position
-   stoneBodyPosition=lstones.body.position
-
-   var distance=dist(stoneBodyPosition.x,stoneBodyPosition.y,mangoBodyPosition.x,mangoBodyPosition.y)
-	if(distance<=lmango.r+lstones.r){
-		Matter.Body.setStatic(lmango.body,false)
+function detectCollision(stonebody,mangobody){
+	stonepos=stonebody.body.position;
+	mangopos=mangobody.body.position;
+	var distance=dist(stonepos.x,stonepos.y,mangopos.x,mangopos.y);
+	if(distance<=mangobody.r+stonebody.r){
+		Matter.Body.setStatic(mangobody.body,false);
 	}
-
-
-
-
-
 }
 
 function keyPressed(){
 	if(keyCode===32){
-		Matter.Body.setPosition(stones.body,{x:100,y:465});
-		launcherObject.attach(stones.body);
+		Matter.Body.setPosition(stoneObj.body,{x:225,y:400});
+		launcherObject.Launch(stoneObj.body);
 	}
 }
+	
+
+
+
+
+
+
+
